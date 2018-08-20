@@ -1,26 +1,40 @@
-<%= form_for @company do |f| %>
 	<ul>
 		<% if @company.errors.any? %>
+		<div class="alert alert-danger" role="alert">
 			<%= @company.errors.full_messages.each do |msg| %>
 				<li><%= msg %></li>
 			<% end %>
 		<% end %>
 	</ul>
+</div>
 
-<p>Company Details</p>
-	<%= f.label :name %>
-	<%= f.text_field :name %>
 
-<p>Building Floors Available</p>
-	<% Building.all.each do |b| %>
-		<%= f.fields_for :offices, b do |b_field| %>
-			<%= b_field.hidden_field :id %>
-			<%= b_field.label b.name %>
-			<%= b_field.collection_check_boxes :offices, b.empty_offices, :floor, :floor %>
+	<div class="container">
+		<%= form_for @company do |f| %>
+		<div class="form-group">
+			<h4>Company Details</h4>
+		 <%= f.label :name %>
+		 <%= f.text_field :name %>
+		</div>
+		<div class="form-group">
+			<h4>Building Floors Available</h4>
+			<div class="row">
+			<% Building.all.each do |building| %>
+			<div class="col-sm">
+			<p><%= building.name %></p>
+			<% building.available_floors.each do |floor| %>
+			<%= f.fields_for :offices do |o_field| %>
+			<%= o_field.hidden_field :building_id, :value => building.id %>
+			<%= o_field.check_box :floor, {}, floor %>
+			<%= floor %><br>
+			<% end %>
+			<% end %>
+			</div>
+			<% end %>
+			</div>
+			<%= f.submit %>
 		<% end %>
-	<% end %>
-	<br>
+		</div>
 
 
-	<%= f.submit %>
-<% end %>
+  </div>

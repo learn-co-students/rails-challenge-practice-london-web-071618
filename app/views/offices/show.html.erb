@@ -1,0 +1,7 @@
+<h1><%= @office.company.name %> @ <%= link_to @office.building.name, building_path(@office.building) %> </h1>
+<h3>Employees in this office:</h3>
+<ol>
+  <% @office.employees.each do |employee| %>
+  <li><%= employee.name %> </li>
+  <% end %>
+</ol>
