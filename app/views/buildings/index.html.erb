@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>All Buildings</h2>
+  <% @buildings.each do |building| %>
+  <ul>
+  <li><%= link_to building.name, building_path(building) %></li>
+  <li>Available Floors: <%= building.available_floors.join(", ")%></li>
+
+  </ul>
+  <% end %>
+
+</div>

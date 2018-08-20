@@ -1,0 +1,11 @@
+<h1> <%= @building.name %> </h1>
+<h3>Current Rent Income:</h3>
+<p>£<%= @total_rent %></p>
+<h3>Employees in this building:</h3>
+<%= @building.companies.uniq.map{ |c| c.employees.count }.inject(:+) %>
+<h3>Companies in this building:</h3>
+<ol>
+  <% @building.companies.uniq.each do |company| %>
+  <li><%= link_to company.name, company_path(company) %>, Floor(s) <%= company.offices.select{|office| office.building == @building}.map {|office| office.floor}.join(", ") %></li>
+  <% end %>
+</ol>
